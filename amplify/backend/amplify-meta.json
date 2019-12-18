@@ -82,5 +82,28 @@
 			},
 			"lastPushDirHash": "hqy/FzjEbw/RDdLL3jD/+urSqro="
 		}
+	},
+	"storage": {
+		"dynamoded97c99": {
+			"service": "DynamoDB",
+			"providerPlugin": "awscloudformation"
+		}
+	},
+	"function": {
+		"quicknotes99295b47": {
+			"service": "Lambda",
+			"providerPlugin": "awscloudformation",
+			"build": true,
+			"dependsOn": [
+				{
+					"category": "storage",
+					"resourceName": "dynamoded97c99",
+					"attributes": [
+						"Name",
+						"Arn"
+					]
+				}
+			]
+		}
 	}
 }
