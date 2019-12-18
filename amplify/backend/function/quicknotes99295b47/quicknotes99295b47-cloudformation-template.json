@@ -75,6 +75,30 @@
             "Timeout": "25"
           }
         },
+        "PullRssSchedule": {
+            "Type": "AWS::Events::Rule",
+            "Properties": {
+              "Name": "PullRssSchedule",
+              "Description": "Triggers a download of markets",
+              "ScheduleExpression": "rate(5 minutes)",
+              "Targets": [{
+                "Id": "PullRssScheduleTarget",
+                "Arn": {
+                  "Fn::GetAtt": [ "LambdaFunction", "Arn" ]
+                }
+              }],
+              "State": "ENABLED"
+            }
+        },
+        "PullRssScheduleInvokeLambdaPermission": {
+            "Type": "AWS::Lambda::Permission",
+            "Properties": {
+              "FunctionName": { "Ref": "LambdaFunction" },
+              "Action": "lambda:InvokeFunction",
+              "Principal": "events.amazonaws.com",
+              "SourceArn": { "Fn::GetAtt": [ "PullRssSchedule", "Arn" ] }
+            }
+        },
         "LambdaExecutionRole": {
             "Type": "AWS::IAM::Role",
             "Properties": {
