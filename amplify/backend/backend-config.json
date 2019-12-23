@@ -15,7 +15,39 @@
 			}
 		}
 	},
-	"predictions": {},
-	"storage": {},
-	"function": {}
+	"predictions": {
+		"transcriptione65259cc": {
+			"providerPlugin": "awscloudformation",
+			"service": "Transcribe",
+			"convertType": "transcription"
+		},
+		"speechGeneratorc72b6c38": {
+			"providerPlugin": "awscloudformation",
+			"service": "Polly",
+			"convertType": "speechGenerator"
+		}
+	},
+	"storage": {
+		"dynamoded97c99": {
+			"service": "DynamoDB",
+			"providerPlugin": "awscloudformation"
+		}
+	},
+	"function": {
+		"quicknotes99295b47": {
+			"service": "Lambda",
+			"providerPlugin": "awscloudformation",
+			"build": true,
+			"dependsOn": [
+				{
+					"category": "storage",
+					"resourceName": "dynamoded97c99",
+					"attributes": [
+						"Name",
+						"Arn"
+					]
+				}
+			]
+		}
+	}
 }

@@ -16,6 +16,7 @@
                 "quicknotes9506fafe": {}
             },
             "function": {
+                "quicknotes99295b47": {},
                 "dynamoded97c99": {}
             }
         }
@@ -34,7 +35,7 @@
                 "IdentityPoolName": "quicknotes9506fafe_identitypool_9506fafe__devk",
                 "UserPoolName": "quicknotes9506fafe_userpool_9506fafe"
             },
-            "lastPushTimeStamp": "2019-12-23T21:25:55.457Z",
+            "lastPushTimeStamp": "2019-12-23T21:34:14.017Z",
             "providerMetadata": {
                 "s3TemplateURL": "https://s3.amazonaws.com/amplify-quick-notes-devk-185830-deployment/amplify-cfn-templates/auth/quicknotes9506fafe-cloudformation-template.yml",
                 "logicalId": "authquicknotes9506fafe"
@@ -50,7 +51,7 @@
                 "GraphQLAPIIdOutput": "ryvozuwqjjf2hpcnzhh7w5dqk4",
                 "GraphQLAPIEndpointOutput": "https://aa57dyn2qndxdef3kp2v74bjka.appsync-api.eu-west-1.amazonaws.com/graphql"
             },
-            "lastPushTimeStamp": "2019-12-23T21:25:55.458Z",
+            "lastPushTimeStamp": "2019-12-23T21:34:14.019Z",
             "providerMetadata": {
                 "s3TemplateURL": "https://s3.amazonaws.com/amplify-quick-notes-devk-185830-deployment/amplify-cfn-templates/api/cloudformation-template.json",
                 "logicalId": "apiquicknotes"
