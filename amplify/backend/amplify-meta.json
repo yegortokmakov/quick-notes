@@ -78,36 +78,5 @@
 			}
 		}
 	},
-	"function": {
-		"quicknotes99295b47": {
-			"service": "Lambda",
-			"providerPlugin": "awscloudformation",
-			"build": true,
-			"dependsOn": [
-				{
-					"category": "storage",
-					"resourceName": "dynamoded97c99",
-					"attributes": [
-						"Name",
-						"Arn"
-					]
-				}
-			],
-			"output": {
-				"Region": "eu-west-1",
-				"Arn": "arn:aws:lambda:eu-west-1:761128311188:function:quicknotes99295b47-devk",
-				"Name": "quicknotes99295b47-devk",
-				"LambdaExecutionRole": "quicknotesLambdaRole1cf4b505-devk"
-			},
-			"lastPushTimeStamp": "2019-12-23T21:00:48.597Z",
-			"providerMetadata": {
-				"s3TemplateURL": "https://s3.amazonaws.com/amplify-quick-notes-devk-185830-deployment/amplify-cfn-templates/function/quicknotes99295b47-cloudformation-template.json",
-				"logicalId": "functionquicknotes99295b47"
-			},
-			"lastBuildTimeStamp": "2019-12-18T10:32:24.905Z",
-			"lastPackageTimeStamp": "2019-12-18T10:32:28.321Z",
-			"distZipFilename": "quicknotes99295b47-71533734686b534e6349-build.zip",
-			"lastPushDirHash": "MGfcZeExOHWylamWuxizA6dhxTQ="
-		}
-	}
+	"function": {}
 }
