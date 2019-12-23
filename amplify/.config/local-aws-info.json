@@ -1,7 +1,7 @@
 {
-    "dev": {
+    "devk": {
         "configLevel": "project",
         "useProfile": true,
-        "profileName": "isengard-amplify-cli"
+        "profileName": "amplify1"
     }
 }

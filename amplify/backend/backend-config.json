@@ -15,18 +15,7 @@
 			}
 		}
 	},
-	"predictions": {
-		"transcriptione65259cc": {
-			"providerPlugin": "awscloudformation",
-			"service": "Transcribe",
-			"convertType": "transcription"
-		},
-		"speechGeneratorc72b6c38": {
-			"providerPlugin": "awscloudformation",
-			"service": "Polly",
-			"convertType": "speechGenerator"
-		}
-	},
+	"predictions": {},
 	"storage": {
 		"dynamoded97c99": {
 			"service": "DynamoDB",

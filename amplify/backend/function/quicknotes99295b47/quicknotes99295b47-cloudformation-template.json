@@ -1,202 +1,249 @@
 {
-    "AWSTemplateFormatVersion": "2010-09-09",
-    "Description": "Lambda resource stack creation using Amplify CLI",
-    "Parameters": {
-        "env": {
-            "Type": "String"
-        },
-    
-    
-    
-        "storagedynamoded97c99Name": {
-            "Type": "String",
-            "Default": "storagedynamoded97c99Name"
-            },
-        
-        "storagedynamoded97c99Arn": {
-            "Type": "String",
-            "Default": "storagedynamoded97c99Arn"
-            }
-        
-        
-    
-    },
-    "Conditions": {
-        "ShouldNotCreateEnvResources": {
-            "Fn::Equals": [
-                {
-                    "Ref": "env"
-                },
-                "NONE"
-            ]
-        }
-    },
-    "Resources": {
-        "LambdaFunction": {
-          "Type": "AWS::Lambda::Function",
-          "Metadata": {
-            "aws:asset:path": "./src",
-            "aws:asset:property": "Code"
-          },
-          "Properties": {
-            "Handler": "index.handler",
-            "FunctionName": {
-                "Fn::If": [
-                    "ShouldNotCreateEnvResources",
-                    "quicknotes99295b47", 
-                    {
-
-                        "Fn::Join": [
-                            "",
-                            [
-                                "quicknotes99295b47",
-                                "-",
-                                {
-                                    "Ref": "env"
-                                }
-                            ]
-                        ]
-                    }      
-                ]
-            },
-            "Environment": {
-                "Variables" : {
-                    "ENV": {
-                        "Ref": "env"
-                    },
-                    "REGION": { 
-                        "Ref": "AWS::Region"
-                    }
-                    
-                }
-            },
-            "Role": { "Fn::GetAtt" : ["LambdaExecutionRole", "Arn"] },
-            "Runtime": "nodejs10.x",
-            "Timeout": "25"
-          }
-        },
-        "PullRssSchedule": {
-            "Type": "AWS::Events::Rule",
-            "Properties": {
-              "Name": "PullRssSchedule",
-              "Description": "Triggers a download of markets",
-              "ScheduleExpression": "rate(5 minutes)",
-              "Targets": [{
-                "Id": "PullRssScheduleTarget",
-                "Arn": {
-                  "Fn::GetAtt": [ "LambdaFunction", "Arn" ]
-                }
-              }],
-              "State": "ENABLED"
-            }
-        },
-        "PullRssScheduleInvokeLambdaPermission": {
-            "Type": "AWS::Lambda::Permission",
-            "Properties": {
-              "FunctionName": { "Ref": "LambdaFunction" },
-              "Action": "lambda:InvokeFunction",
-              "Principal": "events.amazonaws.com",
-              "SourceArn": { "Fn::GetAtt": [ "PullRssSchedule", "Arn" ] }
-            }
-        },
-        "LambdaExecutionRole": {
-            "Type": "AWS::IAM::Role",
-            "Properties": {
-                "RoleName": {
-                    "Fn::If": [
-                        "ShouldNotCreateEnvResources",
-                        "quicknotesLambdaRole1cf4b505", 
-                        {
-
-                            "Fn::Join": [
-                                "",
-                                [
-                                    "quicknotesLambdaRole1cf4b505",
-                                    "-",
-                                    {
-                                        "Ref": "env"
-                                    }
-                                ]
-                            ]
-                        } 
-                    ]
-                },
-                "AssumeRolePolicyDocument": {
-                    "Version": "2012-10-17",
-                    "Statement": [
-                        {
-                            "Effect": "Allow",
-                            "Principal": {
-                                "Service": [
-                                    "lambda.amazonaws.com"
-                                ]
-                            },
-                            "Action": [
-                                "sts:AssumeRole"
-                            ]
-                        }
-                    ]
-                }
-            }
-        }
-        ,"lambdaexecutionpolicy": {
-            "DependsOn": ["LambdaExecutionRole"],
-            "Type": "AWS::IAM::Policy",
-            "Properties": {
-                "PolicyName": "lambda-execution-policy",
-                "Roles": [{ "Ref": "LambdaExecutionRole" }],
-                "PolicyDocument": {
-                    "Version": "2012-10-17",
-                    "Statement": [
-                        {
-                            "Effect": "Allow",
-                            "Action":["logs:CreateLogGroup",
-                            "logs:CreateLogStream",
-                            "logs:PutLogEvents"],
-                            "Resource": { "Fn::Sub" : [ "arn:aws:logs:${region}:${account}:log-group:/aws/lambda/${lambda}:log-stream:*", { "region": {"Ref": "AWS::Region"},  "account": {"Ref": "AWS::AccountId"}, "lambda": {"Ref": "LambdaFunction"}} ]}
-                        },
-                        {
-                            "Effect": "Allow", 
-                            "Action": ["dynamodb:GetItem","dynamodb:Query","dynamodb:Scan","dynamodb:PutItem","dynamodb:UpdateItem","dynamodb:DeleteItem"],
-                            "Resource": [
-                            
-                                { "Ref": "storagedynamoded97c99Arn" },
-                                {
-                                    "Fn::Join": [
-                                        "/",
-                                        [
-                                            { "Ref": "storagedynamoded97c99Arn" },
-                                            "index/*"
-                                        ]
-                                    ]
-                                }      
-                            
-                            ]
-                        }
-                        
-                    ]
-                }
-            }
-        }
-    },
-    "Outputs": {
-        "Name": {
-            "Value": {
-                "Ref": "LambdaFunction"
-            }
-        },
-        "Arn": {
-            "Value": {"Fn::GetAtt": ["LambdaFunction", "Arn"]}
-        },
-        "Region": {
-            "Value": {
-                "Ref": "AWS::Region"
-            }
-        },
-        "LambdaExecutionRole": {
-            "Value": {
-                "Ref": "LambdaExecutionRole"
-            }
-        }
-    }
+	"AWSTemplateFormatVersion": "2010-09-09",
+	"Description": "Lambda resource stack creation using Amplify CLI",
+	"Parameters": {
+		"env": {
+			"Type": "String"
+		},
+		"storagedynamoded97c99Name": {
+			"Type": "String",
+			"Default": "storagedynamoded97c99Name"
+		},
+		"storagedynamoded97c99Arn": {
+			"Type": "String",
+			"Default": "storagedynamoded97c99Arn"
+		}
+	},
+	"Conditions": {
+		"ShouldNotCreateEnvResources": {
+			"Fn::Equals": [
+				{
+					"Ref": "env"
+				},
+				"NONE"
+			]
+		}
+	},
+	"Resources": {
+		"LambdaFunction": {
+			"Type": "AWS::Lambda::Function",
+			"Metadata": {
+				"aws:asset:path": "./src",
+				"aws:asset:property": "Code"
+			},
+			"Properties": {
+				"Handler": "index.handler",
+				"FunctionName": {
+					"Fn::If": [
+						"ShouldNotCreateEnvResources",
+						"quicknotes99295b47",
+						{
+							"Fn::Join": [
+								"",
+								[
+									"quicknotes99295b47",
+									"-",
+									{
+										"Ref": "env"
+									}
+								]
+							]
+						}
+					]
+				},
+				"Environment": {
+					"Variables": {
+						"ENV": {
+							"Ref": "env"
+						},
+						"REGION": {
+							"Ref": "AWS::Region"
+						}
+					}
+				},
+				"Role": {
+					"Fn::GetAtt": [
+						"LambdaExecutionRole",
+						"Arn"
+					]
+				},
+				"Runtime": "nodejs10.x",
+				"Timeout": "25",
+				"Code": {
+					"S3Bucket": "amplify-quick-notes-devk-185830-deployment",
+					"S3Key": "amplify-builds/quicknotes99295b47-71533734686b534e6349-build.zip"
+				}
+			}
+		},
+		"PullRssSchedule": {
+			"Type": "AWS::Events::Rule",
+			"Properties": {
+				"Name": "PullRssSchedule",
+				"Description": "Triggers a download of markets",
+				"ScheduleExpression": "rate(5 minutes)",
+				"Targets": [
+					{
+						"Id": "PullRssScheduleTarget",
+						"Arn": {
+							"Fn::GetAtt": [
+								"LambdaFunction",
+								"Arn"
+							]
+						}
+					}
+				],
+				"State": "ENABLED"
+			}
+		},
+		"PullRssScheduleInvokeLambdaPermission": {
+			"Type": "AWS::Lambda::Permission",
+			"Properties": {
+				"FunctionName": {
+					"Ref": "LambdaFunction"
+				},
+				"Action": "lambda:InvokeFunction",
+				"Principal": "events.amazonaws.com",
+				"SourceArn": {
+					"Fn::GetAtt": [
+						"PullRssSchedule",
+						"Arn"
+					]
+				}
+			}
+		},
+		"LambdaExecutionRole": {
+			"Type": "AWS::IAM::Role",
+			"Properties": {
+				"RoleName": {
+					"Fn::If": [
+						"ShouldNotCreateEnvResources",
+						"quicknotesLambdaRole1cf4b505",
+						{
+							"Fn::Join": [
+								"",
+								[
+									"quicknotesLambdaRole1cf4b505",
+									"-",
+									{
+										"Ref": "env"
+									}
+								]
+							]
+						}
+					]
+				},
+				"AssumeRolePolicyDocument": {
+					"Version": "2012-10-17",
+					"Statement": [
+						{
+							"Effect": "Allow",
+							"Principal": {
+								"Service": [
+									"lambda.amazonaws.com"
+								]
+							},
+							"Action": [
+								"sts:AssumeRole"
+							]
+						}
+					]
+				}
+			}
+		},
+		"lambdaexecutionpolicy": {
+			"DependsOn": [
+				"LambdaExecutionRole"
+			],
+			"Type": "AWS::IAM::Policy",
+			"Properties": {
+				"PolicyName": "lambda-execution-policy",
+				"Roles": [
+					{
+						"Ref": "LambdaExecutionRole"
+					}
+				],
+				"PolicyDocument": {
+					"Version": "2012-10-17",
+					"Statement": [
+						{
+							"Effect": "Allow",
+							"Action": [
+								"logs:CreateLogGroup",
+								"logs:CreateLogStream",
+								"logs:PutLogEvents"
+							],
+							"Resource": {
+								"Fn::Sub": [
+									"arn:aws:logs:${region}:${account}:log-group:/aws/lambda/${lambda}:log-stream:*",
+									{
+										"region": {
+											"Ref": "AWS::Region"
+										},
+										"account": {
+											"Ref": "AWS::AccountId"
+										},
+										"lambda": {
+											"Ref": "LambdaFunction"
+										}
+									}
+								]
+							}
+						},
+						{
+							"Effect": "Allow",
+							"Action": [
+								"dynamodb:GetItem",
+								"dynamodb:Query",
+								"dynamodb:Scan",
+								"dynamodb:PutItem",
+								"dynamodb:UpdateItem",
+								"dynamodb:DeleteItem"
+							],
+							"Resource": [
+								{
+									"Ref": "storagedynamoded97c99Arn"
+								},
+								{
+									"Fn::Join": [
+										"/",
+										[
+											{
+												"Ref": "storagedynamoded97c99Arn"
+											},
+											"index/*"
+										]
+									]
+								}
+							]
+						}
+					]
+				}
+			}
+		}
+	},
+	"Outputs": {
+		"Name": {
+			"Value": {
+				"Ref": "LambdaFunction"
+			}
+		},
+		"Arn": {
+			"Value": {
+				"Fn::GetAtt": [
+					"LambdaFunction",
+					"Arn"
+				]
+			}
+		},
+		"Region": {
+			"Value": {
+				"Ref": "AWS::Region"
+			}
+		},
+		"LambdaExecutionRole": {
+			"Value": {
+				"Ref": "LambdaExecutionRole"
+			}
+		}
+	}
 }
