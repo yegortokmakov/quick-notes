@@ -16,11 +16,6 @@
 		}
 	},
 	"predictions": {},
-	"storage": {
-		"dynamoded97c99": {
-			"service": "DynamoDB",
-			"providerPlugin": "awscloudformation"
-		}
-	},
+	"storage": {},
 	"function": {}
 }

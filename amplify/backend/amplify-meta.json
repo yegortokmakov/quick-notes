@@ -59,24 +59,6 @@
 		}
 	},
 	"predictions": {},
-	"storage": {
-		"dynamoded97c99": {
-			"service": "DynamoDB",
-			"providerPlugin": "awscloudformation",
-			"output": {
-				"PartitionKeyName": "testColumn",
-				"Region": "eu-west-1",
-				"Arn": "arn:aws:dynamodb:eu-west-1:761128311188:table/dynamoded97c99-devk",
-				"StreamArn": "arn:aws:dynamodb:eu-west-1:761128311188:table/dynamoded97c99-devk/stream/2019-12-18T10:06:02.633",
-				"PartitionKeyType": "S",
-				"Name": "dynamoded97c99-devk"
-			},
-			"lastPushTimeStamp": "2019-12-23T21:00:48.596Z",
-			"providerMetadata": {
-				"s3TemplateURL": "https://s3.amazonaws.com/amplify-quick-notes-devk-185830-deployment/amplify-cfn-templates/storage/dynamoded97c99-cloudformation-template.json",
-				"logicalId": "storagedynamoded97c99"
-			}
-		}
-	},
+	"storage": {},
 	"function": {}
 }

@@ -1,5 +1,0 @@
-{
-    "tableName": "dynamoded97c99",
-    "partitionKeyName": "testColumn",
-    "partitionKeyType": "S"
-}
