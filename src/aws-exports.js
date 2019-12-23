@@ -9,33 +9,7 @@ const awsmobile = {
     "oauth": {},
     "aws_appsync_graphqlEndpoint": "https://aa57dyn2qndxdef3kp2v74bjka.appsync-api.eu-west-1.amazonaws.com/graphql",
     "aws_appsync_region": "eu-west-1",
-    "aws_appsync_authenticationType": "AMAZON_COGNITO_USER_POOLS",
-    "aws_dynamodb_all_tables_region": "eu-west-1",
-    "aws_dynamodb_table_schemas": [
-        {
-            "tableName": "dynamoded97c99-devk",
-            "region": "eu-west-1"
-        }
-    ],
-    "predictions": {
-        "convert": {
-            "transcription": {
-                "region": "eu-west-1",
-                "proxy": false,
-                "defaults": {
-                    "language": "en-US"
-                }
-            },
-            "speechGenerator": {
-                "region": "eu-west-1",
-                "proxy": false,
-                "defaults": {
-                    "VoiceId": "Kendra",
-                    "LanguageCode": "en-US"
-                }
-            }
-        }
-    }
+    "aws_appsync_authenticationType": "AMAZON_COGNITO_USER_POOLS"
 };
 
 
